@@ -2,10 +2,6 @@
 
 > A plataforma social focada em compartilhar como você está se sentindo.
 
-![GitHub license](https://img.shields.io)
-![GitHub stars](https://img.shields.io)
-![GitHub issues](https://img.shields.io)
-
 ---
 
 ## 📌 Tabela de Conteúdos
@@ -21,12 +17,12 @@
 ---
 
 ## 🚀 Sobre o Projeto
-O **[Nome da Rede Social]** foi desenvolvido para resolver [problema que a rede social resolve]. Diferente de outras redes, o nosso foco é [diferencial competitivo].
+O projeto foi desenvolvido para resolver um cenário deficiente administrativo dos eventos. Diferente de outros, o nosso foco é o sentimento dos participantes.
 
 Este projeto é um MVP (Minimum Viable Product) focado em:
 *   Usuários engajados.
 *   Segurança de dados.
-*   Feed em tempo real.
+  
 
 ---
 
