@@ -1,6 +1,6 @@
-# 🌐 PLATAFORMA DE GESTÃO DE EVENTOS 
+# PLATAFORMA DE GESTÃO DE EVENTOS 
 
-> A plataforma social focada em compartilhar como você está se sentindo.
+> A plataforma de gestão focada em organizar eventos.
 
 ---
 
