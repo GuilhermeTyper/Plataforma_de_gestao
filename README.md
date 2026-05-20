@@ -17,7 +17,7 @@
 ---
 
 ## 🚀 Sobre o Projeto
-O projeto foi desenvolvido para resolver um cenário deficiente administrativo dos eventos. Diferente de outros, o nosso foco é o sentimento dos participantes.
+O projeto foi desenvolvido para resolver um cenário deficiente administrativo dos eventos.
 
 Este projeto é um MVP (Minimum Viable Product) focado em:
 *   Usuários engajados.
