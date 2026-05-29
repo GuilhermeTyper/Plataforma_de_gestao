@@ -1,135 +1,128 @@
-# PLATAFORMA DE GESTÃO DE EVENTOS 
+# 📊 Plataforma de Gestão
 
-> A plataforma de gestão focada em organizar eventos.
-
----
-
-## 📌 Tabela de Conteúdos
-1. [Sobre o Projeto](#-sobre-o-projeto)
-2. [Funcionalidades Principais](#-funcionalidades-principais)
-3. [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-4. [Pré-requisitos](#-pré-requisitos)
-5. [Como Instalar e Rodar](#-como-instalar-e-rodar)
-6. [Estrutura do Banco de Dados](#-estrutura-do-banco-de-dados)
-7. [Como Contribuir](#-como-contribuir)
-8. [Licença](#-licença)
+> Uma solução robusta e escalável para o gerenciamento e controle de processos corporativos, combinando uma API REST de alta performance com uma interface de usuário moderna e responsiva.
 
 ---
 
-## 🚀 Sobre o Projeto
-O projeto foi desenvolvido para resolver um cenário deficiente administrativo dos eventos.
+## 📌 Índice
 
-Este projeto é um MVP (Minimum Viable Product) focado em:
-*   Usuários engajados.
-*   Segurança de dados.
-  
-
----
-
-## ✨ Funcionalidades Principais
-*   ✅ **Autenticação Segura:** Cadastro, Login (JWT/OAuth).
-*   ✅ **Perfil de Usuário:** Edição, biografia, foto de perfil.
-*   ✅ **Feed em Tempo Real:** Postagens de texto e imagem.
-*   ✅ **Interações:** Curtidas, comentários e compartilhamentos.
-*   ✅ **Sistema de Amizade/Seguidores:** Seguir, unfollow, solicitações.
-*   ✅ **Notificações:** Alertas em tempo real.
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Tecnologias Utilizadas](#%EF%B8%8F-tecnologias-utilizadas)
+- [Arquitetura e Recursos](#-arquitetura-e-recursos)
+- [Como Executar o Projeto](#-como-executar-o-projeto)
+  - [Pré-requisitos](#pré-requisitos)
+  - [Configuração do Backend](#1-configura%C3%A7%C3%A3o-do-backend-laravel)
+  - [Configuração do Frontend](#2-configura%C3%A7%C3%A3o-do-frontend-react)
+- [Executando os Testes](#%EF%B8%8F-executando-os-testes)
+- [Estrutura de Variáveis de Ambiente](#-estrutura-de-variáveis-de-ambiente)
 
 ---
+
+## 💻 Sobre o Projeto
+
+A **Plataforma de Gestão** é um sistema completo desenvolvido para otimizar fluxos de trabalho, centralizar dados operacionais e fornecer relatórios estratégicos. O projeto foi construído separando as responsabilidades de negócio (Backend isolado em uma API RESTful) e a experiência de usuário (Frontend SPA com React).
 
 ## 🛠️ Tecnologias Utilizadas
-A rede social foi construída com o seguinte stack tecnológico:
 
-**Front-end:**
-*   [React.js / Next.js / React Native]
-*   [Redux / Context API] - Gerenciamento de Estado
-*   [Tailwind CSS / Styled Components] - Estilização
+O ecossistema do projeto é composto pelas seguintes tecnologias:
 
-**Back-end:**
-*   [Node.js / Python / Django]
-*   [Socket.io] - Funcionalidades em tempo real
-*   [Express]
-
-**Banco de Dados:**
-*   [PostgreSQL] - Dados relacionais (usuários, amizades)
-*   [MongoDB] - Postagens/Logs
-
-**Serviços/DevOps:**
-*   [AWS S3] - Armazenamento de imagens
-*   [Docker]
-*   [Git/GitHub]
+* **Backend:** [Laravel](https://laravel.com/) (Framework PHP)
+* **Frontend:** [React](https://react.dev/) (Biblioteca JavaScript para interfaces)
+* **Banco de Dados:** [PostgreSQL](https://www.postgresql.org/) (Banco relacional avançado)
+* **Autenticação:** JWT (JSON Web Tokens) para comunicação stateless e segura
+* **Gerenciador de Pacotes:** [Composer](https://getcomposer.org/) (PHP) & [NPM](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/) (JavaScript)
+* **Suíte de Testes:** PHPUnit (Testes automatizados e de integração no Backend)
 
 ---
 
-## 📋 Pré-requisitos
-Antes de começar, você precisará ter instalado em sua máquina:
-*   [Node.js (v16+)](https://nodejs.org)
-*   [Docker](https://www.docker.com)
-*   [Gerenciador de pacotes npm ou yarn]
+## ⚙️ Arquitetura e Recursos
+
+* **Autenticação Stateless:** Controle de sessão e rotas protegidas utilizando JWT, garantindo que cada requisição entre o React e o Laravel seja autenticada de forma segura através de headers HTTP.
+* **API RESTful:** Endpoints padronizados em JSON para todas as operações de CRUD da plataforma de gestão.
+* **Banco de Dados Relacional:** Modelagem de dados otimizada tirando proveito dos recursos avançados de indexação e integridade do PostgreSQL.
+* **Testes Automatizados:** Cobertura de funcionalidades críticas e fluxos de negócio usando PHPUnit para garantir a estabilidade do ecossistema.
 
 ---
 
-## 🖥️ Como Instalar e Rodar
+## 🚀 Como Executar o Projeto
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com
-    ```
-
-2.  **Entre na pasta do projeto:**
-    ```bash
-    cd PROJETO-REDE-SOCIAL
-
-    ```
-
-3.  **Instale as dependências (Front e Back):**
-    ```bash
-    npm install
-    # ou
-    yarn install
-    ```
-
-4.  **Configure as variáveis de ambiente (.env):**
-    *   Crie um arquivo `.env` na raiz do backend baseado no `.env.example`.
-
-5.  **Suba o banco de dados com Docker:**
-    ```bash
-    docker-compose up -d
-    ```
-
-6.  **Inicie a aplicação:**
-    ```bash
-    npm start
-    # ou
-    yarn start
-    ```
-
-7.  Acesse `http://localhost:3000` no seu navegador.
+### Pré-requisitos
+Antes de iniciar, certifique-se de ter instalado em sua máquina:
+* PHP (v8.1 ou superior)
+* Composer
+* Node.js (v18 ou superior) e gerenciador NPM/Yarn
+* Serviço do PostgreSQL ativo
 
 ---
 
-## 📊 Estrutura do Banco de Dados
-O modelo de dados é baseado em um grafo social, focado em interações:
+### 1. Configuração do Backend (Laravel)
 
-*   **Users:** ID, Nome, Email, Senha, Foto, Bio.
-*   **Posts:** ID, UserID, Conteúdo, FotoURL, Timestamp.
-*   **Follows/Friends:** FollowerID, FollowingID, Data.
-*   **Likes/Comments:** ID, PostID, UserID, Conteúdo.
+```bash
+# Clone o repositório e acesse a pasta do backend
+$git clone [https://github.com/seu-usuario/seu-repositorio.git$](https://github.com/seu-usuario/seu-repositorio.git$) cd seu-repositorio/backend
 
----
+# Instale as dependências do PHP via Composer
+$ composer install
 
-## 🤝 Como Contribuir
-Contribuições são o que tornam a comunidade open-source um lugar incrível!
+# Crie o arquivo de configuração local
+$ cp .env.example .env
 
-1.  Faça o Fork do projeto.
-2.  Crie uma branch para sua funcionalidade (`git checkout -b feature/NovaFuncionalidade`).
-3.  Commit suas mudanças (`git commit -m 'Adiciona NovaFuncionalidade'`).
-4.  Push para a branch (`git push origin feature/NovaFuncionalidade`).
-5.  Abra um Pull Request.
+# Gere a chave criptográfica do Laravel
+$python -c "import secrets; print(secrets.token_hex(16))" # Ou use o comando nativo:$ php artisan key:generate
 
----
+# Configure o JWT Secret (dependendo do pacote utilizado, ex: tymon/jwt-auth)
+$ php artisan jwt:secret
 
-## 📜 Licença
-Distribuído sob a licença [MIT/Apache/GPL]. Veja `LICENSE` para mais informações.
+# Crie o banco de dados no PostgreSQL e execute as migrações/seeds
+$ php artisan migrate --seed
 
----
-Desenvolvido por [Seu Nome/Nome da Equipe] - [Seu Email/LinkedIn]
+# Inicie o servidor embutido do Laravel
+$ php artisan serve
+````
+### 2. Configuração do Frontend (React)
+
+```bash
+# Navegue até a pasta do frontend
+$ cd ../frontend
+
+# Instale as dependências do ecossistema JavaScript
+$ npm install  # ou yarn install
+
+# Crie o arquivo de ambiente para o Frontend e aponte para a URL do Laravel
+$ cp .env.example .env
+
+# Inicie a aplicação em modo de desenvolvimento
+$ npm run dev  # ou yarn start
+````
+
+## 🧪 Executando os Testes
+Para garantir o correto funcionamento das regras de negócio do backend e evitar regressões, execute as suítes de testes com o PHPUnit:
+
+```bash
+# Na pasta raiz do backend:
+./vendor/bin/phpunit
+
+# Ou utilizando o comando auxiliar do Laravel:
+php artisan test
+```
+## 🔒 Estrutura de Variáveis de Ambiente
+### 1.Configurações de Banco de Dados (backend/.env)
+```bash
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=nome_do_seu_banco
+DB_USERNAME=seu_usuario_postgres
+DB_PASSWORD=sua_senha_postgres
+```
+### 2. Configurações da API no Cliente (frontend/.env)
+```bash
+# Altere de acordo com o endereço onde o servidor Laravel está rodando
+VITE_API_URL=http://localhost:8000/api
+```
+
+## 👤 Autor
+Desenvolvido por Seu Nome — Sinta-se à vontade para entrar em contato!
+
+
+
