@@ -8,13 +8,14 @@
 
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Tecnologias Utilizadas](#%EF%B8%8F-tecnologias-utilizadas)
-- [Arquitetura e Recursos](#-arquitetura-e-recursos)
+- [Arquitetura e Recursos](#%EF%B8%8F-arquitetura-e-recursos)
 - [Como Executar o Projeto](#-como-executar-o-projeto)
   - [Pré-requisitos](#pré-requisitos)
-  - [Configuração do Backend](#1-configura%C3%A7%C3%A3o-do-backend-laravel)
-  - [Configuração do Frontend](#2-configura%C3%A7%C3%A3o-do-frontend-react)
-- [Executando os Testes](#%EF%B8%8F-executando-os-testes)
+  - [Configuração do Backend](#1-configuração-do-backend-laravel)
+  - [Configuração do Frontend](#2-configuração-do-frontend-react)
+- [Executando os Testes](#-executando-os-testes)
 - [Estrutura de Variáveis de Ambiente](#-estrutura-de-variáveis-de-ambiente)
+- [Autor](#-autor)
 
 ---
 
@@ -122,7 +123,7 @@ VITE_API_URL=http://localhost:8000/api
 ```
 
 ## 👤 Autor
-Desenvolvido por Seu Nome — Sinta-se à vontade para entrar em contato!
+Desenvolvido por GuilermeTyper — Sinta-se à vontade para entrar em contato!
 
 
 
