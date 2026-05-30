@@ -2,31 +2,55 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject; // Se for usar o JWT-Auth depois
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUuids; // HasUuids faz o Laravel gerar o UUID sozinho!
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected $table = 'usuarios'; // Alinhando com o seu DER
+
+    protected $fillable = [
+        'nome',
+        'email',
+        'senha',
+    ];
+
+    protected $hidden = [
+        'senha',
+    ];
+
+    // Relacionamento: Um usuário é proprietário de Muitos Eventos
+    public function eventosProprios()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(Event::class, 'owner_id');
+    }
+
+    // Relacionamento N:M - Eventos em que o usuário colabora
+    public function eventosColaborados()
+    {
+        return $this->belongsToMany(Event::class, 'usuario_evento', 'id_usuario', 'event_id')
+                    ->withPivot('funcao');
+    }
+
+    // Relacionamento: Tarefas atribuídas a este usuário
+    public function tarefas()
+    {
+        return $this->hasMany(Task::class, 'atribuída_a');
+    }
+
+    // Métodos obrigatórios do JWT (pode deixar pronto)
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
