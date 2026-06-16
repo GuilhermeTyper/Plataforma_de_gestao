@@ -14,6 +14,7 @@
   - [Configuração do Backend](#1-configuração-do-backend-laravel)
   - [Configuração do Frontend](#2-configuração-do-frontend-react)
 - [Executando os Testes](#-executando-os-testes)
+- [Estrutura do banco de dados]
 - [Estrutura de Variáveis de Ambiente](#-estrutura-de-variáveis-de-ambiente)
 - [Autor](#-autor)
 
@@ -106,6 +107,50 @@ Para garantir o correto funcionamento das regras de negócio do backend e evitar
 # Ou utilizando o comando auxiliar do Laravel:
 php artisan test
 ```
+## (emoji) Estrutura do Banco de dados
+
+```mermaid
+erDiagram
+    usuarios {
+        string id PK
+        string nome
+        string email
+    }
+
+    tarefas {
+        bigint id PK
+        bigint id_evento FK
+        string atribuida_a FK
+        string titulo
+        string texto_sentimento
+        string status
+        int priority
+    }
+
+    eventos {
+        bigint id PK
+        string owner_id FK
+        string titulo
+        string descricao
+        string data_inicio
+        string data_fim
+    }
+
+    usuario_evento {
+        bigint id PK
+        bigint event_id FK
+        string id_usuario FK
+        string funcao
+    }
+
+    usuarios ||--o{ tarefas : "atribuída a"
+    eventos ||--o{ tarefas : "possui"
+    usuarios ||--o{ eventos : "é dono de"
+    usuarios ||--o{ usuario_evento : "participa"
+    eventos ||--o{ usuario_evento : "contém"
+```
+
+
 ## 🔒 Estrutura de Variáveis de Ambiente
 ### 1.Configurações de Banco de Dados (backend/.env)
 ```bash
