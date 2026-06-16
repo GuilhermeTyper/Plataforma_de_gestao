@@ -107,7 +107,7 @@ Para garantir o correto funcionamento das regras de negócio do backend e evitar
 # Ou utilizando o comando auxiliar do Laravel:
 php artisan test
 ```
-## (emoji) Estrutura do Banco de dados
+## Estrutura do Banco de dados
 
 ```mermaid
 erDiagram
