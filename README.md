@@ -14,7 +14,7 @@
   - [Configuração do Backend](#1-configuração-do-backend-laravel)
   - [Configuração do Frontend](#2-configuração-do-frontend-react)
 - [Executando os Testes](#-executando-os-testes)
-- [Estrutura do banco de dados](#-estrutura-do-banco-de-dados)
+- [Estrutura do banco de dados](#estrutura-do-banco-de-dados)
 - [Estrutura de Variáveis de Ambiente](#-estrutura-de-variáveis-de-ambiente)
 - [Autor](#-autor)
 
