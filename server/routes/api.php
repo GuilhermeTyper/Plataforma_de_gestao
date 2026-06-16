@@ -7,6 +7,8 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\EventController;
 
 Route::post('/cadastro', [UserController::class, 'store']);
-Route::post('/tarefas', [TaskController::class, 'store']);
-Route::post('/eventos', [EventController::class, 'store']);
 
+Route::middleware(['auth:api'])->group(function () {
+    Route::apiResource('/eventos', EventController::class);
+    Route::apiResource('/tarefas', TaskController::class);
+}); 
