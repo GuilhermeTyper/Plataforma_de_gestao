@@ -63,22 +63,79 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Busca o evento pelo ID, incluindo as tarefas e colaboradores relacionados
+        $evento = Event::with(['tarefas', 'colaboradores'])->find($id);
+
+        if (!$evento) {
+            return response()->json(['message' => 'Evento não encontrado'], 404);
+        }
+
+        $userId = Auth::id();
+        $isColaborador = $evento->colaboradores()->where('id_usuario', $userId)->exists();
+
+        if ($evento->owner_id !== $userId && !$isColaborador) {
+            return response()->json(['message' => 'Você não tem permissão para acessar este evento'], 403);
+        }
+
+        return response()->json($evento, 200);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualizar um evento específico.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $evento = Event::find($id);
+
+        if (!$evento) {
+            return response()->json(['message' => 'Evento não encontrado'], 404);
+        }
+        
+        // verifica se o usuário autenticado é o dono do evento
+        if ($evento->owner_id !== Auth::id()) {
+            return response()->json(['message' => 'Apenas o criador do evento pode editá-lo'], 403);
+        }
+
+        $request->validate([
+            'titulo' => 'sometimes|string|max:255',
+            'descricao' => 'nullable|string',
+            'data_inicio' => 'sometimes|date',
+            'data_fim' => 'nullable|date|after_or_equal:data_inicio',
+
+        ]);
+
+        // Atualiza apenas os campos enviados
+        $evento->update($request->only([
+            'titulo',
+            'descricao',
+            'data_inicio',
+            'data_fim',
+        ]));
+
+        return response()->json([
+            'message' => 'Evento atualizado com sucesso',
+            'evento' => $evento
+        ], 200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remover um evento específico do banco de dados.
      */
     public function destroy(string $id)
     {
-        //
+        $evento = Event::find($id);
+
+        if (!$evento) {
+            return response()->json(['message' => 'Evento não encontrado'], 404);
+        }
+
+        // verifica se o usuário autenticado é o dono do evento
+        if ($evento->owner_id !== Auth::id()) {
+            return response()->json(['message' => 'Apenas o criador do evento pode removê-lo'], 403);
+        }
+
+        $evento->delete();
+
+        return response()->json(['message' => 'Evento removido com sucesso'], 200);
     }
 }
