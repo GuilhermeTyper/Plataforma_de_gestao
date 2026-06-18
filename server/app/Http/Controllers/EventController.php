@@ -35,7 +35,27 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validação dos dados recebidos do React
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'nullable|string',
+            'data_inicio' => 'required|date',
+            'data_fim' => 'nullable|date|after_or_equal:data_inicio',
+        ]);
+
+        // Cria o evento atrelado ao usuário autenticado
+        $evento = Event::create([
+            'owner_id' => Auth::id(), // Pega o ID do token JWT
+            'titulo' => $request->titulo,
+            'descricao' => $request->descricao,
+            'data_inicio' => $request->data_inicio,
+            'data_fim' => $request->data_fim,
+        ]);
+
+        return response()->json([
+            'message' => 'Evento criado com sucesso',
+            'evento' => $evento
+        ], 201);
     }
 
     /**
