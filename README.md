@@ -123,6 +123,7 @@ erDiagram
         string atribuida_a FK
         string titulo
         string texto_sentimento
+        string esclarecimento
         string status
         int priority
     }
