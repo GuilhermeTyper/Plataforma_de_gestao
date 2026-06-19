@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_evento'); // FK para a tabela eventos
             $table->uuid('atribuída_a')->nullable(); // FK para o UUID de usuários
             $table->string('titulo');
-            $table->text('texto_sentimento')->nullable(); // Campo estratégico do Mood!
+            $table->text('texto_sentimento')->nullable(); // Campo estratégico
+            $table->text('esclarecimento')->nullable(); // Campo para o usuário explicar o sentimento, se quiser
             
             // Status como ENUM igual ao seu desenho
             $table->enum('status', ['pendente', 'em_andamento', 'concluído'])->default('pendente');
