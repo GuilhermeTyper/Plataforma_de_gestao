@@ -39,7 +39,14 @@ class UserController extends Controller
             'nascimento' => $request->nascimento,
         ]);
 
-        return response()->json($usuario, 201);
+        return response()->json([
+            'message' => 'Usuário cadastrado com sucesso!',
+            'user' => [
+                'id' => $usuario->id,
+                'nome' => $usuario->nome,
+                'email' => $usuario->email,
+            ]
+        ], 201);
     }
 
     /**
