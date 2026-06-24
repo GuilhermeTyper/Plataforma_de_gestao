@@ -20,6 +20,8 @@ return new class extends Migration
         $table->foreign('event_id')->references('id')->on('eventos')->onDelete('cascade');
         $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
         $table->unique(['event_id', 'id_usuario']); // Evita duplicidade
+
+        $table->unique(['event_id', 'id_usuario'], 'uk_usuario_evento_unico'); // Impede o mesmo usuário de se inscrever no mesmo evento
     });
 }
 

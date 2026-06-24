@@ -21,7 +21,7 @@ return new class extends Migration
         $table->timestamps();
     });
 
-    DB::statement("ALTER TABLE usuarios ADD CONSTRAINT chk_nascimento CHECK (nascimento <= CURRENT_DATE - INTERVAL '\18 YEAR\')");
+    DB::statement("ALTER TABLE usuarios ADD CONSTRAINT chk_nascimento CHECK (nascimento <= CURRENT_DATE - INTERVAL '18 years')");
 }
     /**
      * Reverse the migrations.

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -33,6 +34,8 @@ return new class extends Migration
             $table->foreign('id_evento')->references('id')->on('eventos')->onDelete('cascade');
             $table->foreign('atribuída_a')->references('id')->on('usuarios')->onDelete('set null');
         });
+
+        DB::statement("ALTER TABLE tarefas ADD CONSTRAINT check_prioridade CHECK (priority BETWEEN 1 AND 5)");
     }
 
     /**
