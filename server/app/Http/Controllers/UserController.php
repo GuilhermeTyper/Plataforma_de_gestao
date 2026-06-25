@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 class UserController extends Controller
 {
@@ -24,7 +25,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:usuarios,email',
@@ -50,26 +51,70 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Exibir o perfil do usuario logado atualmente.
      */
     public function show(string $id)
     {
-        //
+        if ($id != Auth::id()) {
+            return response()->json(['message' => 'Acesso não autorizado ao Perfil'], 403);
+        }
+
+        $user = User::find($id);
+
+        return response()->json($user, 200);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualizar os dados do proprio perfil.
      */
     public function update(Request $request, string $id)
     {
-        //
+        if ($id !== Auth::id()){
+            return response()->json(['message' => 'Você não tem permissão para editar este perfil.'], 403);
+        }
+
+        $user = User::find($id);
+
+        $request->validate([
+            'nome' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|max:255|unique:usuarios,email,{$id}',
+            'senha' => 'sometimes|string|min:6',
+            'nascimento' => 'nullable|date',
+        ]);
+
+        // Se a senha foi informada, atualiza a senha do usuário
+        if ($request->has('senha')) {
+            $user->senha = Hash::make($request->senha);
+        }
+
+        $user->update($request->only(['nome', 'email', 'nascimento']));
+
+        return response()->json([
+            'message' => 'Perfil atualizado com sucesso!',
+            'user' => [
+                'id' => $user->id,
+                'nome' => $user->nome,
+                'email' => $user->email,
+                'nascimento' => $user->nascimento,
+            ]
+        ], 200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Excluir a conta do usuario logado atualmente.
      */
     public function destroy(string $id)
     {
-        //
+        if ($id !== Auth::id()) {
+            return response()->json(['message' => 'Você não tem permissão para excluir este perfil.'], 403);
+        }
+        $user = User::find($id);
+
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Usuário excluído com sucesso!'
+        ], 200);
+
     }
 }
