@@ -9,6 +9,9 @@ use App\Http\Controllers\EventController;
 Route::post('/cadastro', [UserController::class, 'store']);
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::apiResource('/eventos', EventController::class);
-    Route::apiResource('/tarefas', TaskController::class);
+    Route::apiResource('usuarios', UserController::class)->except(['store']);
+    // CRUD completo de eventos
+    Route::apiResource('eventos', EventController::class);
+    // CRUD completo de tarefas
+    Route::apiResource('tarefas', TaskController::class);
 }); 
