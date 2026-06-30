@@ -52,6 +52,7 @@ O ecossistema do projeto é composto pelas seguintes tecnologias:
 Antes de iniciar, certifique-se de ter instalado em sua máquina:
 * PHP (v8.1 ou superior)
 * Composer
+* React
 * Node.js (v18 ou superior) e gerenciador NPM/Yarn
 * Serviço do PostgreSQL ativo
 
