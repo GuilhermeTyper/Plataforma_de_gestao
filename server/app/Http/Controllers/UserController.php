@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\Fluent\Concerns\Has;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -34,6 +35,7 @@ class UserController extends Controller
         ]);
 
         $usuario = User::create([
+            'id' => (string) Str::uuid(),
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => Hash::make($request->senha),
