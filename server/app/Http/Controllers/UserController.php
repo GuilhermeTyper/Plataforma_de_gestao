@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class UserController extends Controller
 {
@@ -48,6 +50,33 @@ class UserController extends Controller
                 'email' => $usuario->email,
             ]
         ], 201);
+    }
+
+        /**
+     * Autentica o usuário e retorna o Token JWT
+     */
+    public function login(Request $request)
+    {
+        $credenciais = $request->validate([
+            'email' => 'required|string|email',
+            'senha' => 'required|string', 
+        ]);
+
+        $credenciaisProntas = [
+            'email' => $credenciais['email'],
+            'password' => $credenciais['senha']
+        ];
+
+        if (!$token = Auth::guard('api')->attempt($credenciaisProntas)) {
+            return response()->json(['message' => 'E-mail ou senha incorretos.'], 401);
+        }
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            // Alterado aqui: Usando JWTAuth para pegar o TTL com segurança
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
+        ], 200);
     }
 
     /**

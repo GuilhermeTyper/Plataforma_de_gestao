@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject; // Se for usar o JWT-Auth depois
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable, HasUuids; // HasUuids faz o Laravel gerar o UUID sozinho!
+    use HasFactory, Notifiable, HasUuids;
 
     protected $table = 'usuarios'; // Alinhando com o seu DER
 
@@ -18,11 +18,18 @@ class User extends Authenticatable implements JWTSubject
         'nome',
         'email',
         'senha',
+        'nascimento', // 🔥 ADICIONADO: Necessário para o cadastro funcionar com a coluna nova
     ];
 
     protected $hidden = [
         'senha',
     ];
+
+    // 🔥 ADICIONADO: Diz ao Laravel para usar a coluna 'senha' na autenticação interna
+    public function getAuthPassword()
+    {
+        return $this->senha;
+    }
 
     // Relacionamento: Um usuário é proprietário de Muitos Eventos
     public function eventosProprios()
@@ -43,7 +50,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Task::class, 'atribuída_a');
     }
 
-    // Métodos obrigatórios do JWT (pode deixar pronto)
+    // Métodos obrigatórios do JWT
     public function getJWTIdentifier()
     {
         return $this->getKey();

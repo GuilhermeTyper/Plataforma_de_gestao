@@ -7,6 +7,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\EventController;
 
 Route::post('/cadastro', [UserController::class, 'store']);
+Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('usuarios', UserController::class)->except(['store']);
