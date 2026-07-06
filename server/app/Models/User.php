@@ -50,7 +50,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Task::class, 'atribuída_a');
     }
 
-    // Métodos obrigatórios do JWT
+    // Identificador único do JWT
     public function getJWTIdentifier()
     {
         return $this->getKey();
