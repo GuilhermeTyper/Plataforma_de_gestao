@@ -4,26 +4,14 @@ import {
   FolderPlus, 
   MoreHorizontal, 
   Plus, 
-  UserPlus, 
   Info, 
   Calendar, 
-  X, 
   ChevronRight, 
   Trash2, 
   Sparkles, 
   CheckSquare, 
-  MessageSquare,
-  AlertCircle
+  MessageSquare
 } from "lucide-react";
-import { Task, Collaborator, Event, TaskStatus } from "../types.js";
-
-interface BoardViewProps {
-  activeEvent: Event;
-  tasks: Task[];
-  collaborators: Collaborator[];
-  onTaskChange: () => void;
-  onCollaboratorChange: () => void;
-}
 
 export default function BoardView({ 
   activeEvent, 
@@ -31,38 +19,38 @@ export default function BoardView({
   collaborators, 
   onTaskChange, 
   onCollaboratorChange 
-}: BoardViewProps) {
+}) {
   // Modal states
   const [showNewTaskModal, setShowNewTaskModal] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showEditTaskModal, setShowEditTaskModal] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedTask, setSelectedTask] = useState(null);
 
   // New task form fields state
   const [newTitle, setNewTitle] = useState("");
-  const [newStatus, setNewStatus] = useState<TaskStatus>("pendente");
+  const [newStatus, setNewStatus] = useState("pendente");
   const [newAssignedId, setNewAssignedId] = useState("");
-  const [newSentimentType, setNewSentimentType] = useState<Task["sentimentType"]>("Focado");
+  const [newSentimentType, setNewSentimentType] = useState("Focado");
   const [newSentimentText, setNewSentimentText] = useState("");
-  const [newProgress, setNewProgress] = useState<number | "">("");
+  const [newProgress, setNewProgress] = useState("");
 
   // Invite form fields state
   const [inviteName, setInviteName] = useState("");
-  const [inviteRole, setInviteRole] = useState<'editor' | 'visualizador'>("editor");
+  const [inviteRole, setInviteRole] = useState("editor");
 
   // Edit task form fields state
   const [editTitle, setEditTitle] = useState("");
-  const [editStatus, setEditStatus] = useState<TaskStatus>("pendente");
+  const [editStatus, setEditStatus] = useState("pendente");
   const [editAssignedId, setEditAssignedId] = useState("");
-  const [editSentimentType, setEditSentimentType] = useState<Task["sentimentType"]>("Focado");
+  const [editSentimentType, setEditSentimentType] = useState("Focado");
   const [editSentimentText, setEditSentimentText] = useState("");
-  const [editProgress, setEditProgress] = useState<number | "">("");
+  const [editProgress, setEditProgress] = useState("");
 
   // Find info helpers
   const eventOrganizer = collaborators.find(c => c.id === activeEvent.organizerId);
 
   // Sentiment class mapper
-  const getSentimentStyles = (sentiment: string) => {
+  const getSentimentStyles = (sentiment) => {
     switch (sentiment) {
       case 'Ansioso':
         return 'text-amber-700 bg-amber-100/70 border-amber-250 px-2 py-0.5 rounded-md font-semibold text-xs inline-block';
@@ -81,8 +69,8 @@ export default function BoardView({
   };
 
   // Format dates beautifully
-  const formatDateRange = (start: string, end: string) => {
-    const parseDateStr = (dateStr: string) => {
+  const formatDateRange = (start, end) => {
+    const parseDateStr = (dateStr) => {
       if (!dateStr) return "";
       const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
       const d = new Date(dateStr + "T00:00:00");
@@ -93,7 +81,7 @@ export default function BoardView({
   };
 
   // Submit handers
-  const handleCreateTask = async (e: React.FormEvent) => {
+  const handleCreateTask = async (e) => {
     e.preventDefault();
     if (!newTitle.trim() || !newAssignedId) {
       alert("Por favor, preencha o título e atribute para um colaborador!");
@@ -124,7 +112,7 @@ export default function BoardView({
     }
   };
 
-  const handleEditTaskClick = (task: Task) => {
+  const handleEditTaskClick = (task) => {
     setSelectedTask(task);
     setEditTitle(task.title);
     setEditStatus(task.status);
@@ -135,7 +123,7 @@ export default function BoardView({
     setShowEditTaskModal(true);
   };
 
-  const handleSaveEditTask = async (e: React.FormEvent) => {
+  const handleSaveEditTask = async (e) => {
     e.preventDefault();
     if (!selectedTask) return;
     try {
@@ -156,7 +144,7 @@ export default function BoardView({
     }
   };
 
-  const handleDeleteTask = async (taskId: string) => {
+  const handleDeleteTask = async (taskId) => {
     if (!confirm("Tem certeza que deseja deletar esta tarefa?")) return;
     try {
       await axios.delete(`/api/tasks/${taskId}`);
@@ -169,7 +157,7 @@ export default function BoardView({
     }
   };
 
-  const handleInviteCollaborator = async (e: React.FormEvent) => {
+  const handleInviteCollaborator = async (e) => {
     e.preventDefault();
     if (!inviteName.trim()) {
       alert("Preencha o nome do colaborador!");
@@ -190,7 +178,7 @@ export default function BoardView({
     }
   };
 
-  const handleQuickStatusChange = async (task: Task, targetStatus: TaskStatus) => {
+  const handleQuickStatusChange = async (task, targetStatus) => {
     try {
       await axios.put(`/api/tasks/${task.id}`, {
         status: targetStatus,
@@ -275,7 +263,7 @@ export default function BoardView({
                         <div className="text-slate-500 font-medium">
                           <span className="text-slate-400">Assigned:</span> {assigned ? assigned.name.replace(/ \(Você\)/, "") : "Sem responsável"}
                         </div>
-                        <div className="text-slate-500 flex items-wrap items-center gap-1.5">
+                        <div className="text-slate-500 flex flex-wrap items-center gap-1.5">
                           <span className="text-slate-400">Sentimento:</span> 
                           <span className={getSentimentStyles(task.sentimentType)}>
                             {task.sentimentType}
@@ -336,7 +324,7 @@ export default function BoardView({
                         <div className="text-slate-500 font-medium">
                           <span className="text-slate-400">Assigned:</span> {assigned ? assigned.name : "Sem responsável"}
                         </div>
-                        <div className="text-slate-500 flex items-wrap items-center gap-1.5">
+                        <div className="text-slate-500 flex flex-wrap items-center gap-1.5">
                           <span className="text-slate-400">Sentimento:</span> 
                           <span className={getSentimentStyles(task.sentimentType)}>
                             {task.sentimentType}
@@ -419,7 +407,7 @@ export default function BoardView({
                         <div className="text-slate-500 font-medium">
                           <span className="text-slate-400">Assigned:</span> {assigned ? assigned.name.replace(/ \(Você\)/, "") : "Carlos"}
                         </div>
-                        <div className="text-slate-500 flex items-wrap items-center gap-1.5">
+                        <div className="text-slate-500 flex flex-wrap items-center gap-1.5">
                           <span className="text-slate-400">Sentimento:</span> 
                           <span className={getSentimentStyles(task.sentimentType)}>
                             {task.sentimentType}
@@ -568,7 +556,7 @@ export default function BoardView({
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Coluna Ativa</label>
                   <select 
                     value={newStatus} 
-                    onChange={(e) => setNewStatus(e.target.value as TaskStatus)}
+                    onChange={(e) => setNewStatus(e.target.value)}
                     className="w-full border border-slate-250 bg-white rounded-xl px-3.5 py-2 text-xs focus:outline-hidden font-medium"
                   >
                     <option value="pendente">Pendente</option>
@@ -613,7 +601,7 @@ export default function BoardView({
                     <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Sentimento Coletivo</label>
                     <select 
                       value={newSentimentType} 
-                      onChange={(e) => setNewSentimentType(e.target.value as any)}
+                      onChange={(e) => setNewSentimentType(e.target.value)}
                       className="w-full border border-slate-250 bg-white rounded-xl px-3.5 py-2 text-xs focus:outline-hidden font-medium"
                     >
                       <option value="Focado">Focado</option>
@@ -670,7 +658,7 @@ export default function BoardView({
               <X className="w-5 h-5" />
             </button>
             <h3 className="text-lg font-display font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <UserPlus className="w-5 h-5 text-blue-600" />
+              <Plus className="w-5 h-5 text-blue-600" />
               Convidar Colaborador
             </h3>
 
@@ -691,7 +679,7 @@ export default function BoardView({
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Cargo / Permissão</label>
                 <select 
                   value={inviteRole} 
-                  onChange={(e) => setInviteRole(e.target.value as any)}
+                  onChange={(e) => setInviteRole(e.target.value)}
                   className="w-full border border-slate-250 bg-white rounded-xl px-3.5 py-2 text-xs focus:outline-hidden font-medium"
                 >
                   <option value="editor">Editor (pode criar e modificar tarefas)</option>
@@ -761,7 +749,7 @@ export default function BoardView({
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Status (Coluna)</label>
                   <select 
                     value={editStatus} 
-                    onChange={(e) => setEditStatus(e.target.value as TaskStatus)}
+                    onChange={(e) => setEditStatus(e.target.value)}
                     className="w-full border border-slate-250 bg-white rounded-xl px-3.5 py-2 text-xs focus:outline-hidden font-medium"
                   >
                     <option value="pendente">Pendente</option>
@@ -805,7 +793,7 @@ export default function BoardView({
                     <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Sentimento de Equipe</label>
                     <select 
                       value={editSentimentType} 
-                      onChange={(e) => setEditSentimentType(e.target.value as any)}
+                      onChange={(e) => setEditSentimentType(e.target.value)}
                       className="w-full border border-slate-250 bg-white rounded-xl px-3.5 py-2 text-xs focus:outline-hidden font-medium"
                     >
                       <option value="Focado">Focado</option>
@@ -865,5 +853,26 @@ export default function BoardView({
       )}
 
     </div>
+  );
+}
+
+// Inline Close helper
+function X(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
   );
 }

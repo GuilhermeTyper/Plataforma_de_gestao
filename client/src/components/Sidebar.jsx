@@ -1,13 +1,7 @@
 import React from "react";
-import { CalendarDays, ListTodo, Users, BarChart3, Radio } from "lucide-react";
+import { CalendarDays, ListTodo, Users, BarChart3 } from "lucide-react";
 
-interface SidebarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  onlineCount: number;
-}
-
-export default function Sidebar({ activeTab, setActiveTab, onlineCount }: SidebarProps) {
+export default function Sidebar({ activeTab, setActiveTab, onlineCount }) {
   const menuItems = [
     { id: "eventos", label: "Eventos", icon: CalendarDays },
     { id: "minhas_tarefas", label: "Minhas Tarefas", icon: ListTodo },
@@ -67,7 +61,7 @@ export default function Sidebar({ activeTab, setActiveTab, onlineCount }: Sideba
             <span className="text-[11px] text-slate-500 font-medium">Servidor Online</span>
           </div>
           <span className="text-[10px] font-mono font-bold bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full">
-            {onlineCount + 2} Colabs
+            {onlineCount} Colabs
           </span>
         </div>
       </div>

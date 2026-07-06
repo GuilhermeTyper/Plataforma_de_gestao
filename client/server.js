@@ -1,10 +1,9 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import { Collaborator, Task, Event } from "./src/types.js";
 
 // In-memory Database
-let collaborators: Collaborator[] = [
+let collaborators = [
   {
     id: "colab-me",
     name: "Fulano de Tal (Você)",
@@ -31,31 +30,34 @@ let collaborators: Collaborator[] = [
   }
 ];
 
-let events: Event[] = [
+let events = [
   {
     id: "event-1",
     title: "Workshop de React",
     organizerId: "colab-me",
     startDate: "2026-05-15",
-    endDate: "2026-05-17"
+    endDate: "2026-05-17",
+    description: "Um workshop colaborativo focado no desenvolvimento moderno em React e Tailwind."
   },
   {
     id: "event-2",
     title: "Hackathon de Inovação",
     organizerId: "colab-maria",
     startDate: "2026-06-20",
-    endDate: "2026-06-22"
+    endDate: "2026-06-22",
+    description: "Maratona intensa de programação para criar soluções web que solucionam desafios locais."
   },
   {
     id: "event-3",
     title: "Lançamento do Portal",
     organizerId: "colab-joao",
     startDate: "2026-07-01",
-    endDate: "2026-07-02"
+    endDate: "2026-07-02",
+    description: "Alinhamento das fases finais e lançamento oficial do portal corporativo de serviços."
   }
 ];
 
-let tasks: Task[] = [
+let tasks = [
   {
     id: "task-1",
     title: "Configurar Ambiente Docker",
@@ -95,14 +97,13 @@ let tasks: Task[] = [
   },
   {
     id: "task-5",
-    title: "Configurar Ambiente Docker",
+    title: "Configurar Servidores de Monitoria",
     status: "pendente",
     assignedId: "colab-joao",
     sentimentType: "Desafiada",
-    sentimentText: "Prazo apertado, mas animado!",
+    sentimentText: "Ajustando as chaves SSH adicionais.",
     eventId: "event-1"
   },
-  // Some sample tasks for event-2
   {
     id: "task-6",
     title: "Definir Temas e Regras",
@@ -144,22 +145,23 @@ async function startServer() {
   });
 
   app.post("/api/events", (req, res) => {
-    const { title, startDate, endDate, organizerId } = req.body;
+    const { title, startDate, endDate, description, organizerId } = req.body;
     if (!title || !startDate || !endDate) {
       return res.status(400).json({ error: "Campos obrigatórios: title, startDate, endDate" });
     }
-    const newEvent: Event = {
+    const newEvent = {
       id: `event-${Date.now()}`,
       title,
       organizerId: organizerId || "colab-me",
       startDate,
-      endDate
+      endDate,
+      description: description || "Sem descrição adicional."
     };
     events.push(newEvent);
     res.status(201).json(newEvent);
   });
 
-  // Get specific event details (with tasks and collaborators lists)
+  // Get specific event details
   app.get("/api/events/:id", (req, res) => {
     const { id } = req.params;
     const event = events.find(e => e.id === id);
@@ -179,10 +181,10 @@ async function startServer() {
     if (!name || !role) {
       return res.status(400).json({ error: "Campos obrigatórios: name, role" });
     }
-    const newColab: Collaborator = {
+    const newColab = {
       id: `colab-${Date.now()}`,
       name,
-      role: role as 'organizador' | 'editor' | 'visualizador',
+      role: role,
       avatarUrl: avatarUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`
     };
     collaborators.push(newColab);
@@ -205,12 +207,12 @@ async function startServer() {
       return res.status(400).json({ error: "Campos obrigatórios: title, eventId, assignedId" });
     }
 
-    const newTask: Task = {
+    const newTask = {
       id: `task-${Date.now()}`,
       title,
-      status: (status || "pendente") as any,
+      status: status || "pendente",
       assignedId,
-      sentimentType: (sentimentType || "Focado") as any,
+      sentimentType: sentimentType || "Focado",
       sentimentText: sentimentText || "Novas atribuições.",
       progress: progress !== undefined ? Number(progress) : undefined,
       eventId

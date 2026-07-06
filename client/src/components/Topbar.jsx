@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import { Bell, Menu, User, Sparkles, CheckSquare, MessageSquare } from "lucide-react";
-import { Collaborator } from "../types.js";
+import { Bell, Menu, Sparkles, CheckSquare, MessageSquare } from "lucide-react";
 
-interface TopbarProps {
-  currentUser: Collaborator;
-  activeTabLabel: string;
-}
-
-export default function Topbar({ currentUser, activeTabLabel }: TopbarProps) {
+export default function Topbar({ currentUser, activeTabLabel }) {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
-  // Mock server status / notifications matching the theme
   const notifications = [
     {
       id: "1",

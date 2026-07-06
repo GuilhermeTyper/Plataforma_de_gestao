@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Sparkles, CalendarDays } from "lucide-react";
-import Sidebar from "./components/Sidebar.tsx";
-import Topbar from "./components/Topbar.tsx";
-import BoardView from "./components/BoardView.tsx";
-import EventsView from "./components/EventsView.tsx";
-import TeamView from "./components/TeamView.tsx";
-import ReportsView from "./components/ReportsView.tsx";
-import { Event, Collaborator, Task } from "./types.js";
+import { CalendarDays } from "lucide-react";
+import Sidebar from "./components/Sidebar.jsx";
+import Topbar from "./components/Topbar.jsx";
+import BoardView from "./components/BoardView.jsx";
+import EventsView from "./components/EventsView.jsx";
+import TeamView from "./components/TeamView.jsx";
+import ReportsView from "./components/ReportsView.jsx";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>("minhas_tarefas");
-  const [activeEventId, setActiveEventId] = useState<string | null>("event-1");
-  const [events, setEvents] = useState<Event[]>([]);
-  const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [activeTab, setActiveTab] = useState("minhas_tarefas");
+  const [activeEventId, setActiveEventId] = useState("event-1");
+  const [events, setEvents] = useState([]);
+  const [collaborators, setCollaborators] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Load baseline resources
   const fetchEvents = async () => {
@@ -66,14 +65,14 @@ export default function App() {
   const currentUser = collaborators.find(c => c.id === "colab-me") || {
     id: "colab-me",
     name: "Fulano de Tal (Você)",
-    role: "organizador" as const,
+    role: "organizador",
     avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=128&auto=format&fit=crop"
   };
 
   // Find currently viewed event structure
   const activeEvent = events.find(e => e.id === activeEventId) || events[0];
 
-  const getTabLabel = (tab: string) => {
+  const getTabLabel = (tab) => {
     switch (tab) {
       case "eventos": return "Lista de Eventos";
       case "minhas_tarefas": return "Quadro de Tarefas";
