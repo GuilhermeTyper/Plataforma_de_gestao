@@ -1,6 +1,0 @@
-{
-  "name": "Gestão de Eventos Colaborativos",
-  "description": "Sistema de gestão de eventos com kanban de tarefas colaborativas, controle de sentimentos de equipe e acompanhamento em tempo real.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
